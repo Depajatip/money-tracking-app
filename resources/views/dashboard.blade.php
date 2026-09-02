@@ -140,10 +140,10 @@
         <div class="wallet-item">
             <div>
                 <i class="bi bi-wallet2 me-2"></i>
-                {{ auth()->user()->wallets->first()->name }}
+                aaa
             </div>
 
-            <span>Rp{{ auth()->user()->wallets->first()->initial_balance }}</span>
+            <span>aaa</span>
         </div>
 
         <div class="wallet-item">

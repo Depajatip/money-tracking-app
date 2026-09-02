@@ -57,4 +57,14 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function completeProfileView(): View
+    {
+        return view('auth.completeprofile');
+    }
+
+    public function allSetProfileView(): View
+    {
+        return view('user.allsetprofile');
+    }
 }

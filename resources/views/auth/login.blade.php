@@ -52,46 +52,4 @@
         </div>
         
     </form>
-    <div class="container" style="max-width: 500px; margin-top: 35%;">
-    <!-- Judul Step Dinamis -->
-    <!-- Contoh Logika: Sesuaikan teks berdasarkan variabel $currentStep dari backend -->
-    <p class="fw-bold mb-3 fs-6">Step 1/4 - Create Account</p>
-
-    <!-- Komponen Stepper -->
-    <div class="position-relative d-flex justify-content-between align-items-center">
-        
-        <!-- Garis Progress Abu-abu (Latar Belakang) -->
-        <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" style="height: 8px; z-index: 0;">
-            <!-- Mengatur panjang warna biru aktif berdasarkan step saat ini -->
-            <!-- Step 1 = w-0, Step 2 = w-33, Step 3 = w-66, Step 4 = w-100 -->
-            <div class="progress-bar bg-primary w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-
-        <!-- Lingkaran Step 1 (Aktif/Selesai) -->
-        <!-- Gunakan kelas 'border-primary' dan sub-lingkaran biru di dalamnya -->
-        <div class="step-circle border border-primary bg-white d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
-            <div class="bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
-        </div>
-
-        <!-- Lingkaran Step 2 (Belum Aktif) -->
-        <!-- Untuk step berikutnya, cukup gunakan border abu-abu biasa -->
-        <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
-
-        <!-- Lingkaran Step 3 (Belum Aktif) -->
-        <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
-
-        <!-- Lingkaran Step 4 (Belum Aktif) -->
-        <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
-
-</div>
-
-<!-- CSS Kustom Tambahan (Taruh di dalam tag <style> atau file CSS Anda) -->
-<style>
-    .step-circle {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        border-width: 2px !important;
-    }
-</style>
 </x-guest-layout>
