@@ -63,8 +63,36 @@ class ProfileController extends Controller
         return view('auth.completeprofile');
     }
 
-    public function allSetProfileView(): View
+public function allSetProfileView()
+{
+    $user = auth()->user();
+    
+    // Ambil data wallet milik user agar view tidak error
+    $addedWallets = \App\Models\Wallet::with('walletType')
+        ->where('user_id', $user->id)
+        ->get();
+        
+    $totalBalance = $addedWallets->sum('initial_balance');
+
+    return view('user.allsetprofile', compact('user', 'addedWallets', 'totalBalance'));
+}
+
+    public function store(Request $request): RedirectResponse
     {
-        return view('user.allsetprofile');
+        $validated = $request->validate([
+            'phone_number' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            // 'profile_photo' => ['required',],
+        ]);
+    
+        $user = auth()->user();
+        $user->update([
+            'phone_number' => $request->phone_number,
+            'birth_date' => $request->birth_date,
+            // 'profile_photo' => $request->profile_photo,
+        ]);
+        // session(['setup_profile_data' => $validated]);
+
+        return redirect()->route('setupYourMoney');
     }
 }

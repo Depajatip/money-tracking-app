@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['web', 'auth'])->group(function () {
 
     // Logika pengarah otomatis berdasarkan Role
     Route::get('/dashboard', function () {
@@ -27,8 +27,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/complete-profile', [ProfileController::class, 'completeProfileView'])->name('completeprofile');
-    Route::get('/setup-your-money', [MoneySetupController::class, 'setupYourMoney'])->name('setupYourMoney');
+    Route::post('/complete-profile-store', [ProfileController::class, 'store'])->name('completeprofile.store');
     Route::get('/all-set-profile', [ProfileController::class, 'allSetProfileView'])->name('allSetProfile');
+
+    Route::get('/setup-your-money', [MoneySetupController::class, 'setupYourMoney'])->name('setupYourMoney');
+    Route::get('/setup-your-money/{walletType}', [MoneySetupController::class, 'showMoneyForm'])->name('setupYourMoney.form');
+    Route::post('/setup-your-money-store', [MoneySetupController::class, 'storeMoneySetup'])->name('setupYourMoney.store');
+
+    Route::get('/all-set', [MoneySetupController::class, 'allSet'])->name('allSet');
+    Route::post('/all-set/save', [MoneySetupController::class, 'saveSetup'])->name('allSet.save');
 
 
 
