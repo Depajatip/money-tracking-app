@@ -1,16 +1,42 @@
 <x-guest-layout>
 
-    <div>
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-top: 50px;">
-            <div style="width: 150px; height: 150px; border-radius: 50%; background: #ddd;"></div>
-            <p class="fs-1 fw-bold mb-4">Complete your profile</p>
-            <div style="width: 70px; height: 70px; border-radius: 50%; background: #ddd;"></div>
-            <p class="mt-0">choose profile</p>
-        </div>
-    </div>
-
-    <form method="POST" action="{{ route('completeprofile.store') }}">
+    <!-- FORM DIBUKA DI SINI (Membuat input foto masuk ke dalam form) -->
+    <form method="POST" action="{{ route('completeprofile.store') }}" enctype="multipart/form-data">
         @csrf
+
+        <div>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-top: 50px;">
+                
+                <!-- Placeholder / Ilustrasi Atas -->
+                <div style="width: 150px; height: 150px; border-radius: 50%; background: #ddd;" class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="bi bi-person-bounding-box fs-1 text-secondary"></i>
+                </div>
+
+                <p class="fs-1 fw-bold mb-4">Complete your profile</p>
+
+                <!-- Input File profile (Sudah di dalam form) -->
+                <input type="file" id="profileInput" name="profile_photo" accept="image/*" class="d-none" onchange="previewImage(event)">
+
+                <!-- Label Tombol Upload -->
+                <label for="profileInput" style="cursor: pointer;" class="d-flex flex-column align-items-center">
+                    
+                    <div id="profilePreviewContainer" 
+                         style="width: 70px; height: 70px; border-radius: 50%; background: #ddd; overflow: hidden;" 
+                         class="d-flex align-items-center justify-content-center border shadow-sm">
+                        
+                        <i id="defaultIcon" class="bi bi-camera-fill fs-4 text-secondary"></i>
+                        <img id="profilePreview" src="" alt="Preview" class="w-100 h-100 d-none" style="object-fit: cover;">
+                    
+                    </div>
+
+                    <p class="mt-2 text-primary fw-semibold small">Choose profile</p>
+                </label>
+
+                <x-input-error :messages="$errors->get('profile')" class="mt-2" />
+            </div>
+        </div>
+
+        <!-- Input Text Profile -->
         <div style="margin:auto; width: 90%;">
 
             <div class="mb-3">
@@ -31,7 +57,7 @@
 
             <div class="mb-3">
                 <x-input-label for="email" :value="__('Email')" class="form-label fw-bold fs-6" />
-                <x-text-input style="background-color: #e9ecef; cursor: not-allowed;" 
+                <x-text-input style="background-color: #e9ecef; cursor: not-allowed;"
                     id="email"
                     class="form-control"
                     type="email"
@@ -41,7 +67,7 @@
                     required
                     autocomplete="username"
                     readonly />
-                    
+
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
@@ -69,47 +95,37 @@
                 <x-input-error :messages="$errors->get('birth_date')" class="mt-2" />
             </div>
         </div>
+
         <div>
             <button type="submit" class="btn mt-4" style="width: 80%; margin:auto; display: block; background-color: #3A2A2A; color: white;">
                 continue
             </button>
         </div>
 
-
+        <!-- Stepper Bar Component -->
         <div class="container" style="max-width: 500px; margin-top: 25px;">
-            <!-- Judul Step Dinamis -->
-            <!-- Contoh Logika: Sesuaikan teks berdasarkan variabel $currentStep dari backend -->
-            <p class="fw-bold mb-3 fs-6">Step 1/4 - Create Account</p>
+            <p class="fw-bold mb-3 fs-6">Step 2/4 - Complete Profile</p>
 
-            <!-- Komponen Stepper -->
             <div class="position-relative d-flex justify-content-between align-items-center">
 
-                <!-- Garis Progress Abu-abu (Latar Belakang) -->
                 <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" style="height: 8px; z-index: 0;">
-                    <!-- Mengatur panjang warna biru aktif berdasarkan step saat ini -->
-                    <!-- Step 1 = w-0, Step 2 = w-33, Step 3 = w-66, Step 4 = w-100 -->
-                    <div class="progress-bar bg-primary w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
-                <!-- Lingkaran Step 1 (Aktif/Selesai) -->
-                <!-- Gunakan kelas 'border-primary' dan sub-lingkaran biru di dalamnya -->
+                <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+                    <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+                </div>
+
                 <div class="step-circle border border-primary bg-white d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
                     <div class="bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
                 </div>
 
-                <!-- Lingkaran Step 2 (Belum Aktif) -->
-                <!-- Untuk step berikutnya, cukup gunakan border abu-abu biasa -->
                 <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
 
-                <!-- Lingkaran Step 3 (Belum Aktif) -->
-                <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
-
-                <!-- Lingkaran Step 4 (Belum Aktif) -->
                 <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
 
             </div>
 
-            <!-- CSS Kustom Tambahan (Taruh di dalam tag <style> atau file CSS Anda) -->
             <style>
                 .step-circle {
                     width: 18px;
@@ -118,5 +134,27 @@
                     border-width: 2px !important;
                 }
             </style>
-    </form>
+        </div>
+
+    </form> <!-- FORM DITUTUP DI SINI -->
+
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('profilePreview');
+            const defaultIcon = document.getElementById('defaultIcon');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('d-none');
+                    defaultIcon.classList.add('d-none');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 </x-guest-layout>

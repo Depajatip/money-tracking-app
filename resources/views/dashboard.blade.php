@@ -3,30 +3,35 @@
 @section('content')
 <div class="container-fluid px-3 py-3 money-dashboard">
 
-    {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex align-items-center gap-3">
             <div class="dropdown">
-                <!-- Pemicu Dropdown ditempelkan ke profile-placeholder -->
-                <div class="profile-placeholder dropdown-toggle"
+                <div class="profile-placeholder dropdown-toggle p-0 border-0 overflow-hidden d-flex align-items-center justify-content-center"
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style="cursor: pointer;">
+                    style="cursor: pointer; width: 40px; height: 40px; border-radius: 50%; background-color: #ddd;">
+
+                    @if (Auth::user()->profile_photo)
+                    <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}"
+                        alt="Profile Photo"
+                        class="w-100 h-100"
+                        style="object-fit: cover; object-position: center; display: block;">
+                    @else
+                    <i class="bi bi-person-fill fs-5 text-secondary"></i>
+                    @endif
+
                 </div>
 
-                <!-- Isi Menu Dropdown -->
                 <ul class="dropdown-menu dropdown-menu-end shadow">
                     <li>
                         <a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('profile.edit') }}">
                             <i class="bi bi-person"></i> Profile
                         </a>
                     </li>
-
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -50,20 +55,17 @@
     </div>
 
 
-    {{-- Total Balance --}}
     <div class="balance-card mb-3">
         <div class="small">Total Saldo</div>
 
         <div class="balance-amount">
-            Rp 6.000.000
+            Rp {{ number_format($walletsList->sum('initial_balance'), 0, ',', '.') }}
             <i class="bi bi-eye ms-1"></i>
         </div>
 
-        <small>Starting Balance</small>
     </div>
 
 
-    {{-- Income & Expense --}}
     <div class="row g-2 mb-2">
 
         <div class="col-6">
@@ -95,7 +97,6 @@
     </div>
 
 
-    {{-- Spending Trend --}}
     <div class="trend-card mb-3">
         <div class="small fw-medium mb-2">
             Spending Trend
@@ -123,53 +124,52 @@
     </div>
 
 
-    {{-- Wallet --}}
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="fw-medium">Your Wallet</span>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <span class="fw-medium">Your Wallet</span>
+    <a href="{{ route('user.wallets.index') }}" class="text-decoration-none text-dark small">
+        See all →
+    </a>
+</div>
 
-        <a href="#"
-            class="text-decoration-none text-dark small">
-            See all →
-        </a>
-    </div>
-
-
-    {{-- Wallet Items --}}
-    <div class="wallet-list">
-
-        <div class="wallet-item">
+<div class="wallet-list">
+    @forelse($walletsList as $wallet)
+        <div class="walletsList d-flex justify-content-between align-items-center mb-2">
             <div>
-                <i class="bi bi-wallet2 me-2"></i>
-                aaa
+                <!-- Contoh pengkondisian ikon berdasarkan data (jika ada) -->
+                @if(optional($wallet->walletType)->name == 'Bank')
+                    <i class="bi bi-bank me-2"></i>
+                @elseif(optional($wallet->walletType)->name == 'Credit Card')
+                    <i class="bi bi-credit-card me-2"></i>
+                @else
+                    <i class="bi bi-wallet2 me-2"></i>
+                @endif
+
+                {{ $wallet->name }}
             </div>
 
-            <span>aaa</span>
+            <span>Rp {{ number_format($wallet->initial_balance, 0, ',', '.') }}</span>
         </div>
-
-        <div class="wallet-item">
-            <div>
-                <i class="bi bi-bank me-2"></i>
-                BCA
-            </div>
-
-            <span>Rp 2.000.000</span>
+    @empty
+        <div class="text-center py-5">
+            <p class="text-muted">
+                You don't have any wallet yet.
+            </p>
+            <a href="{{ route('user.wallets.create') }}" class="btn btn-primary">
+                Add Your First Wallet
+            </a>
         </div>
-
-        <div class="wallet-item">
-            <div>
-                <i class="bi bi-credit-card me-2"></i>
-                Gopay
-            </div>
-
-            <span>Rp 3.000.000</span>
-        </div>
-
-    </div>
+    @endforelse
+</div>
 
 </div>
 
+<style>
+    .profile-placeholder.dropdown-toggle::after {
+        display: none !important;
+    }
+</style>
 
-{{-- Bottom Navigation --}}
+
 @include('layouts.navbar')
 
 @endsection

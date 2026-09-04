@@ -10,6 +10,13 @@
             Manage the Money Tracking system.
         </p>
     </div>
+<button>    <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form></button>
+
 
     <div class="row g-4">
 

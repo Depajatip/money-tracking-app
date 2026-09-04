@@ -14,8 +14,11 @@ class MoneySetupController extends Controller
     public function setupYourMoney()
     {
         $walletTypes = WalletType::where('is_active', true)->get();
+        $user = Auth::user();
 
-        $addedWallets = $user ? $user->wallets()->with('walletType')->get() : collect();
+        $addedWallets = $user
+            ? Wallet::with('walletType')->where('user_id', $user->id)->get()
+            : collect();
         $totalBalance = $addedWallets->sum('initial_balance');
 
         return view('user.setupyourmoney', compact('user', 'walletTypes', 'addedWallets', 'totalBalance'));

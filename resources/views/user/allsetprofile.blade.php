@@ -20,10 +20,20 @@
     <h6 class="fw-bold text-dark text-center mb-4">Welcome to Money Tracking App!!</h6>
 
     <div class="d-flex align-items-center gap-3 mb-4 px-2">
-        <div class="rounded-circle border border-dark d-flex align-items-center justify-content-center flex-shrink-0" 
-             style="width: 60px; height: 60px;">
-            <i class="bi bi-person fs-2 text-dark"></i>
-        </div>
+    <div class="profile-placeholder p-0 border-0 overflow-hidden d-flex align-items-center justify-content-center"
+        aria-expanded="false"
+        style="cursor: pointer; width: 70px; height: 70px; border-radius: 50%; background-color: #ddd;">
+        
+        @if (Auth::user()->profile_photo)
+            <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" 
+                 alt="Profile Photo" 
+                 class="w-100 h-100" 
+                 style="object-fit: cover; object-position: center; display: block;">
+        @else
+            <i class="bi bi-person-fill fs-5 text-secondary"></i>
+        @endif
+
+    </div>
 
         <div>
             <h6 class="fw-bold text-dark m-0">{{ $user->name ?? auth()->user()->name ?? 'User' }}</h6>
@@ -87,6 +97,51 @@
             Go to Dashboard
         </button>
     </form>
+
+    <div class="container" style="max-width: 500px; margin-top: 25px;">
+    <!-- Judul Step Dinamis -->
+    <p class="fw-bold mb-3 fs-6">Step 4/4 - All Set</p>
+
+    <!-- Komponen Stepper -->
+    <div class="position-relative d-flex justify-content-between align-items-center">
+
+        <!-- Garis Progress Penuh (100%) -->
+        <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" style="height: 8px; z-index: 0;">
+            <div class="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <!-- Lingkaran Step 1 (Selesai) -->
+        <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+        </div>
+
+        <!-- Lingkaran Step 2 (Selesai) -->
+        <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+        </div>
+
+        <!-- Lingkaran Step 3 (Selesai) -->
+        <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+        </div>
+
+        <!-- Lingkaran Step 4 (Aktif / Selesai) -->
+        <div class="step-circle border border-primary bg-white d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <div class="bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
+        </div>
+
+    </div>
+
+    <!-- CSS Kustom -->
+    <style>
+        .step-circle {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border-width: 2px !important;
+        }
+    </style>
+</div>
 
 </div>
 @endsection

@@ -11,7 +11,6 @@
         @csrf
         <div class="container py-4" style="max-width: 480px;">
 
-            <!-- Section 1: Where do you keep your money? -->
             <p class="fw-semibold text-dark mb-3">Where do you keep your money?</p>
 
             <div class="row g-3 mb-4">
@@ -41,7 +40,6 @@
 
             <hr class="my-4 text-muted opacity-25">
 
-            <!-- Section 2: Your Wallet List (Akan tampil jika sudah ada wallet) -->
             @if(count($addedWallets) > 0)
             <h6 class="fw-bold text-dark mb-3">Your Wallet</h6>
 
@@ -67,7 +65,6 @@
 
             <hr class="my-3 text-muted opacity-25">
 
-            <!-- Total Balance -->
             <div class="d-flex align-items-center justify-content-between mb-4 px-1">
                 <span class="fw-bold text-dark fs-6">Total :</span>
                 <span class="fw-bold text-dark fs-5">
@@ -75,7 +72,6 @@
                 </span>
             </div>
 
-            <!-- Tombol Lanjut ke All Set -->
             <a href="{{ route('allSetProfile') }}"
                 class="btn text-white w-100 py-3 fw-bold rounded-4 shadow-sm"
                 style="background-color: #1a237e;">
@@ -84,84 +80,71 @@
             @endif
 
         </div>
-        <div class="container" style="max-width: 500px; margin-top: 25px;">
-            <!-- Judul Step Dinamis -->
-            <!-- Contoh Logika: Sesuaikan teks berdasarkan variabel $currentStep dari backend -->
-            <p class="fw-bold mb-3 fs-6">Step 1/4 - Create Account</p>
 
-            <!-- Komponen Stepper -->
-            <div class="position-relative d-flex justify-content-between align-items-center">
 
-                <!-- Garis Progress Abu-abu (Latar Belakang) -->
-                <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" style="height: 8px; z-index: 0;">
-                    <!-- Mengatur panjang warna biru aktif berdasarkan step saat ini -->
-                    <!-- Step 1 = w-0, Step 2 = w-33, Step 3 = w-66, Step 4 = w-100 -->
-                    <div class="progress-bar bg-primary w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+<div class="container" style="max-width: 500px; margin-top: 65%;">
+    <p class="fw-bold mb-3 fs-6">Step 3/4 - Set Up Your Money</p>
 
-                <!-- Lingkaran Step 1 (Aktif/Selesai) -->
-                <!-- Gunakan kelas 'border-primary' dan sub-lingkaran biru di dalamnya -->
-                <div class="step-circle border border-primary bg-white d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
-                    <div class="bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
-                </div>
+    <div class="position-relative d-flex justify-content-between align-items-center">
 
-                <!-- Lingkaran Step 2 (Belum Aktif) -->
-                <!-- Untuk step berikutnya, cukup gunakan border abu-abu biasa -->
-                <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
+        <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" style="height: 8px; z-index: 0;">
+            <div class="progress-bar bg-primary" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
 
-                <!-- Lingkaran Step 3 (Belum Aktif) -->
-                <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
+        <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+        </div>
 
-                <!-- Lingkaran Step 4 (Belum Aktif) -->
-                <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
+        <div class="step-circle bg-primary border border-primary d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <i class="bi bi-check text-white" style="font-size: 12px; line-height: 1;"></i>
+        </div>
 
-            </div>
+        <div class="step-circle border border-primary bg-white d-flex align-items-center justify-content-center position-relative" style="z-index: 1;">
+            <div class="bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
+        </div>
 
-            <!-- CSS Kustom Tambahan (Taruh di dalam tag <style> atau file CSS Anda) -->
-            <style>
-                .step-circle {
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    border-width: 2px !important;
-                }
+        <div class="step-circle border border-secondary bg-white position-relative" style="z-index: 1;"></div>
 
-                /* Style Kartu Dasar */
-                .wallet-card {
-                    cursor: pointer;
-                    border-radius: 10px !important;
-                    overflow: hidden;
-                    background-color: #ffffff;
-                    transition: all 0.2s ease-in-out;
-                }
+    </div>
+</div>
+        <style>
+            .step-circle {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                border-width: 2px !important;
+            }
 
-                /* Garis Biru Tebal di Kiri */
-                .wallet-border-left {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    bottom: 0;
-                    width: 6px;
-                    background-color: #0d6efd;
-                    /* Warna biru */
-                }
+            .wallet-card {
+                cursor: pointer;
+                border-radius: 10px !important;
+                overflow: hidden;
+                background-color: #ffffff;
+                transition: all 0.2s ease-in-out;
+            }
 
-                /* Efek Hover */
-                .wallet-card:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-                }
+            .wallet-border-left {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 6px;
+                background-color: #0d6efd;
+            }
 
-                /* Efek Saat Kartu Dipilih (Checked State) */
-                .btn-check:checked+.wallet-card {
-                    background-color: #f0f7ff;
-                    border: 1px solid #0d6efd !important;
-                }
+            .wallet-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            }
 
-                .btn-check:checked+.wallet-card .wallet-border-left {
-                    background-color: #0040a8;
-                    /* Warna biru lebih gelap saat aktif */
-                }
-            </style>
+            .btn-check:checked+.wallet-card {
+                background-color: #f0f7ff;
+                border: 1px solid #0d6efd !important;
+            }
+
+            .btn-check:checked+.wallet-card .wallet-border-left {
+                background-color: #0040a8;
+            }
+        </style>
     </form>
 </x-guest-layout>

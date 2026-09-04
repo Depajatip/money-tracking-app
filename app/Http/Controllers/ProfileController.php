@@ -77,22 +77,25 @@ public function allSetProfileView()
     return view('user.allsetprofile', compact('user', 'addedWallets', 'totalBalance'));
 }
 
-    public function store(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'phone_number' => ['required', 'string', 'max:255'],
-            'birth_date' => ['required', 'date'],
-            // 'profile_photo' => ['required',],
-        ]);
-    
-        $user = auth()->user();
-        $user->update([
-            'phone_number' => $request->phone_number,
-            'birth_date' => $request->birth_date,
-            // 'profile_photo' => $request->profile_photo,
-        ]);
-        // session(['setup_profile_data' => $validated]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'phone_number' => ['required', 'numeric'],
+        'birth_date'   => ['required', 'date'],
+        'profile_photo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'], // Maksimal 2MB
+    ]);
 
-        return redirect()->route('setupYourMoney');
+    $user = auth()->user();
+
+    if ($request->hasFile('profile_photo')) {
+        $profile_photoPath = $request->file('profile_photo')->store('profiles', 'public');
+        $user->profile_photo = $profile_photoPath;
     }
+
+    $user->phone_number = $request->phone_number;
+    $user->birth_date = $request->birth_date;
+    $user->save();
+
+    return redirect()->route('setupYourMoney');
+}
 }
